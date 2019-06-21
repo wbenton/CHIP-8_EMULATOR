@@ -25,9 +25,7 @@ static unsigned char chip8_fontset[FONT_SET_NUM] =
   0xF0, 0x80, 0xF0, 0x80, 0x80  // F
 };
 
-void intializeChip8( Chip8 * chip8 ) {
-  /* Zero out all memory and registers */
-  *chip8    = {0};
+void initializeChip8( Chip8 * chip8 ) {
   /* Position pc to start of program instructions */
   chip8->pc = PC_START_VALUE;
 

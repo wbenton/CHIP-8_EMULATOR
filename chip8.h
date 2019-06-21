@@ -26,14 +26,60 @@
 #define START_ETI_MEM     0x600
 #define END_PROG_MEM      0xFFF
 
+/* Mask to extract type of opcode */
+#define OP_CODE_MASK      0xF000
+
+/* Opcode masks */
+#define SYS               0x0000
+#define CLS               0x00E0
+#define RET               0x00EE
+#define JP                0xF000
+#define CALL              0x2000
+#define SE                0x3000
+#define SNE               0x4000
+#define SER               0x5000
+#define LD                0x6000
+#define ADD               0x7000
+#define EIGHT_K_INSTR     0x8000
+#define LDR               0x8000
+#define OR                0x8001
+#define AND               0x8002
+#define XOR               0x8003
+#define ADDC              0x8004
+#define SUB               0x8005
+#define SHR               0x8006
+#define SUBN              0x8007
+#define SHL               0x800E
+#define SNER              0x9000               
+#define LDI               0xA000
+#define JPV0              0xB000
+#define RND               0xC000
+#define DRW               0xD000
+#define INSTR_SKIP        0xE000
+#define SKP               0xE09E
+#define SKNP              0xE0A1
+#define TIMER_DELAYS      0xF000
+#define LDDT              0xF007
+#define LDKP              0xF00A
+#define LDSDT             0xF015
+#define LDST              0xF018
+#define ADDI              0xF01E
+#define LDF               0xF029
+#define LDB               0xF033
+#define LDSI              0xF055
+#define LDVX              0xF065
+
 /* Constants used for default initialization */
 #define PC_START_VALUE    0x200
 #define FONT_SET_NUM      80
 
+/* Constant used shift opcode */
+#define SHIFT_BYTE_UP     8
+
 /* CHIP 8 struct definition */
 typedef struct chip8Cpu
 {
-  unsigned char  V[NUM_OF_REGISTER];   /* General purpose registers (8-bit) */
+  unsigned char  V[NUM_OF_REGISTERS];   /* General purpose registers (8-bit) */
   unsigned short I;                    /* Index register (16-bit)*/
   unsigned short pc;                   /* Program Counter (16-bit) */
   unsigned short stack[STACK_SIZE];    /* Stack to hold return addresses */
@@ -44,10 +90,8 @@ typedef struct chip8Cpu
   unsigned char  drawToScreenFlag;     /* Check if screen should be drawn */
 }Chip8;
 
-
-/* Chip 8 Instruction masks */
-
 /* Function Prototypes */
-void initializeChip8( Chip8 * chip8 );
-void emulateCycle   ( Chip8 * chip8 );
-void loadRom        ( unsigned char * memory[MEM_SIZE] );
+void initializeChip8( Chip8 *chip8 );
+void emulateCycle   ( Chip8 *chip8 );
+void loadRom        ( unsigned char (*memory)[MEM_SIZE] );
+

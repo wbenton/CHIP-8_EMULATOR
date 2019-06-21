@@ -5,6 +5,6 @@
 
 #include "chip8.h"
 
-void loadRom( unsigned char * memory[MEM_SIZE] ) {
+void loadRom( unsigned char (*memory)[MEM_SIZE] ) {
     
 }
