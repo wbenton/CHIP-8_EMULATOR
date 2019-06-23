@@ -13,14 +13,22 @@ int main( int argc, char **argv ) {
   
   /* Set up memory and initialize registers to default values */
   initializeChip8( &chip8 );
-  fprintf( stderr, "%0x\n", chip8.pc ); 
 
-  /* Load fontset into memory */
+  /*
+  fprintf( stderr, "%0x\n", chip8.pc ); 
+  */
+
+  /* Check that font set was intialized */
+  /*
   for( int i = 0; i < FONT_SET_NUM; ++i ) {
     fprintf( stderr, "%0x ", chip8.memory[i] );
-  }
+  } */
 
   /* Load game/program into memory */
-  loadRom( &chip8.memory );
+  loadRom( chip8.memory );
+  
+  for( int i = START_PROG_MEM; i < END_PROG_MEM; ++i ) {
+    fprintf( stderr, "%0x ", chip8.memory[i] );
+  }
 
 }

@@ -26,6 +26,9 @@
 #define START_ETI_MEM     0x600
 #define END_PROG_MEM      0xFFF
 
+/* Size of the opocodes in bytes */
+#define OPCODE_SIZE       1
+
 /* Mask to extract type of opcode */
 #define OP_CODE_MASK      0xF000
 
@@ -93,5 +96,5 @@ typedef struct chip8Cpu
 /* Function Prototypes */
 void initializeChip8( Chip8 *chip8 );
 void emulateCycle   ( Chip8 *chip8 );
-void loadRom        ( unsigned char (*memory)[MEM_SIZE] );
+void loadRom        ( unsigned char *memory );
 
