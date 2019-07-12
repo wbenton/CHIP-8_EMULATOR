@@ -30,9 +30,10 @@
 #define OPCODE_SIZE       1
 
 /* Mask to extract type of opcode */
-#define OP_CODE_MASK      0xF000
+#define OPCODE_MASK      0xF000
 
 /* Opcode masks */
+#define SCR_MASK          0x0000
 #define SYS               0x0000
 #define CLS               0x00E0
 #define RET               0x00EE
@@ -76,8 +77,11 @@
 #define PC_START_VALUE    0x200
 #define FONT_SET_NUM      80
 
-/* Constant used shift opcode */
-#define SHIFT_BYTE_UP     8
+/* Constants used shift and manipulate opcodes */
+#define BYTE              8
+#define NIBBLE            4
+#define BYTE_MAX          255
+#define BIT               1
 
 /* CHIP 8 struct definition */
 typedef struct chip8Cpu
@@ -91,6 +95,7 @@ typedef struct chip8Cpu
   unsigned char  memory[MEM_SIZE];     /* Memory map */
   unsigned char  key[NUM_OF_KEYS];     /* Holds key state */
   unsigned char  drawToScreenFlag;     /* Check if screen should be drawn */
+  unsigned char  gfx[64 * 32];         /* Holds graphics */
 }Chip8;
 
 /* Function Prototypes */
