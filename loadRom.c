@@ -32,20 +32,25 @@ void loadRom( unsigned char * memory ) {
 
   /* TODO MAKE THIS LOOP ENDIAN INDEPENDENT */
   /* Fill memory with contents of game ROM */
+  
   while( !feof( rom ) ) {
 
     /* Read entire 2 byte opcode from rom, THIS IS FOR LITTLE ENDIAN SYSTEMS */
+    /*
     fread( memoryPtr + LITTLE_ENDIAN_OFF, 
       sizeof(unsigned char), SINGLE_INSTR, rom );
     fread( memoryPtr, sizeof(unsigned char), SINGLE_INSTR, rom );
-
+    */
+    fread( memoryPtr, sizeof( unsigned char), SINGLE_INSTR, rom );
     /* Increment where we are pointing in memory */
-    memoryPtr += INSTR_INCR;
+    //memoryPtr += INSTR_INCR;
+    memoryPtr += 1;
 
     /* Check if and error occurred during file reading, if so print error */
     if( ferror( rom ) ) {
       fprintf( stderr, FILE_READ_ERROR );
       return;
     }
+    
   }
 }

@@ -4,31 +4,36 @@
  */
 
 #include "chip8.h"
-#include <stdio.h>
 
 /* Create the chip8 cpu and initializing all fields to 0 */
 Chip8 chip8 = {0};
 
 int main( int argc, char **argv ) {
   
+  int temp = 0;
   /* Set up memory and initialize registers to default values */
   initializeChip8( &chip8 );
 
-  /*
-  fprintf( stderr, "%0x\n", chip8.pc ); 
-  */
-
-  /* Check that font set was intialized */
-  /*
-  for( int i = 0; i < FONT_SET_NUM; ++i ) {
-    fprintf( stderr, "%0x ", chip8.memory[i] );
-  } */
-
   /* Load game/program into memory */
   loadRom( chip8.memory );
-  
-  for( int i = START_PROG_MEM; i < END_PROG_MEM; ++i ) {
-    fprintf( stderr, "%0x ", chip8.memory[i] );
-  }
 
+
+  while(1) {
+
+    fprintf( stderr, "%x\n", chip8.memory[746]); 
+    fprintf( stderr, "%x\n", chip8.pc );
+    fprintf( stderr, "%0x\n", chip8.opcode );
+    fprintf( stderr, "%u\n", chip8.sp );
+    emulateCycle( &chip8 );
+
+    updateScreen( chip8.gfx, chip8.renderer );
+
+    if( chip8.drawToScreenFlag ) {
+      drawScreen( chip8.renderer, chip8.drawToScreenFlag );
+    }
+    SDL_Delay(13);
+  }
+  
+  return 0;
 }
+

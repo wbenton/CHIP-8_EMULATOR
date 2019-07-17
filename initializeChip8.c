@@ -33,4 +33,19 @@ void initializeChip8( Chip8 * chip8 ) {
   for( int i = 0; i < FONT_SET_NUM; ++i ) {
     chip8->memory[i] = chip8_fontset[i];
   }
+
+  /* Create window to that will display the screen */
+  chip8->window    = SDL_CreateWindow("Chip8 Emulator", SDL_WINDOWPOS_UNDEFINED, 
+    SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+
+  /* Create the renderer which will allow for gpu accelerated graphics */
+  chip8->renderer  = SDL_CreateRenderer(chip8->window, -1, 
+    SDL_RENDERER_ACCELERATED); 
+
+  /* Create the window with the renderer */
+  SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, &(chip8->window),
+    &(chip8->renderer));
+
+  /* Set the render color to WHITE */
+  SDL_SetRenderDrawColor(chip8->renderer, WHITE, WHITE, WHITE, FULL_OPAC );
 }

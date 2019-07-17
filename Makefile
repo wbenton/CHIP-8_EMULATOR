@@ -1,5 +1,5 @@
 new :
-	gcc -c *.c
-	gcc *.o
+	gcc -g -c *.c
+	gcc -lSDL2 *.o
 clean :
 	rm -f *.o *.out

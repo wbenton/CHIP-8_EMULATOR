@@ -3,6 +3,11 @@
  * Date: 2019-06-18
  */
 
+/* Packages to include */
+#include "SDL2/SDL.h"
+#include <stdio.h>
+#include <string.h>
+
 /* Constants used to create CHIP 8 runtime env */
 
 /* Constants used to implements registers and runtime stack */
@@ -30,14 +35,14 @@
 #define OPCODE_SIZE       1
 
 /* Mask to extract type of opcode */
-#define OPCODE_MASK      0xF000
+#define OPCODE_MASK       0xF000
 
 /* Opcode masks */
 #define SCR_MASK          0x0000
 #define SYS               0x0000
 #define CLS               0x00E0
 #define RET               0x00EE
-#define JP                0xF000
+#define JP                0x1000
 #define CALL              0x2000
 #define SE                0x3000
 #define SNE               0x4000
@@ -82,6 +87,11 @@
 #define NIBBLE            4
 #define BYTE_MAX          255
 #define BIT               1
+#define PIXEL_NUM         2048
+
+/* Constants used for graphics */
+#define WHITE             255
+#define FULL_OPAC         255
 
 /* CHIP 8 struct definition */
 typedef struct chip8Cpu
@@ -96,10 +106,17 @@ typedef struct chip8Cpu
   unsigned char  key[NUM_OF_KEYS];     /* Holds key state */
   unsigned char  drawToScreenFlag;     /* Check if screen should be drawn */
   unsigned char  gfx[64 * 32];         /* Holds graphics */
+  SDL_Window*    window;
+  SDL_Renderer*  renderer;
+  SDL_Surface*   surface;
+  SDL_Texture*   texture;
+
 }Chip8;
 
 /* Function Prototypes */
 void initializeChip8( Chip8 *chip8 );
 void emulateCycle   ( Chip8 *chip8 );
 void loadRom        ( unsigned char *memory );
+void drawScreen     ( SDL_Renderer *render, unsigned char drawToScreenFlag );
+void updateScreen   ( unsigned char *gfx, SDL_Renderer *renderer );
 
