@@ -2,9 +2,9 @@
 A CHIP-8 Emulator
 
  * `TODO:`
-	* Determine which graphics and timer library to use
+	* Implement timers
 	* Complete opcode functionality
+	* Store key events
 	* Make rom loading endian independent
-	* Implement graphics
-	* Implement key states
+	* Improve graphics rendering
 	* Create debugger
