@@ -97,19 +97,21 @@
 typedef struct chip8Cpu
 {
   unsigned char  V[NUM_OF_REGISTERS];   /* General purpose registers (8-bit) */
-  unsigned short I;                    /* Index register (16-bit)*/
-  unsigned short pc;                   /* Program Counter (16-bit) */
-  unsigned short stack[STACK_SIZE];    /* Stack to hold return addresses */
-  unsigned short sp;                   /* Stack Pointer (16-bit) */
-  unsigned short opcode;               /* Machine code instruction */
-  unsigned char  memory[MEM_SIZE];     /* Memory map */
-  unsigned char  key[NUM_OF_KEYS];     /* Holds key state */
-  unsigned char  drawToScreenFlag;     /* Check if screen should be drawn */
-  unsigned char  gfx[64 * 32];         /* Holds graphics */
-  SDL_Window*    window;
-  SDL_Renderer*  renderer;
-  SDL_Surface*   surface;
-  SDL_Texture*   texture;
+  unsigned short I;                     /* Index register (16-bit)*/
+  unsigned short pc;                    /* Program Counter (16-bit) */
+  unsigned short stack[STACK_SIZE];     /* Stack to hold return addresses */
+  unsigned short sp;                    /* Stack Pointer (16-bit) */
+  unsigned short opcode;                /* Machine code instruction */
+  unsigned short delayTimer;            /* 60hz delay timer */
+  unsigned short soundTimer;            /* 60hz sound timer */
+  unsigned char  memory[MEM_SIZE];      /* Memory map */
+  unsigned char  key[NUM_OF_KEYS];      /* Holds key state */
+  unsigned char  drawToScreenFlag;      /* Check if screen should be drawn */
+  unsigned char  gfx[64 * 32];          /* Holds graphics */
+  SDL_Window*    window;                /* Graphics window */
+  SDL_Renderer*  renderer;              /* Graphics rederer */
+  SDL_Surface*   surface;               /* Surface that is displayed on window*/
+  SDL_Texture*   texture;               /* Texture */
 
 }Chip8;
 

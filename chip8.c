@@ -31,6 +31,8 @@ int main( int argc, char **argv ) {
     if( chip8.drawToScreenFlag ) {
       drawScreen( chip8.renderer, chip8.drawToScreenFlag );
     }
+    chip8.delayTimer -= 1;
+    chip8.soundTimer -= 1;
     SDL_Delay(13);
   }
   

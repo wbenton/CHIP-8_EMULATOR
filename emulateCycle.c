@@ -35,7 +35,9 @@ void emulateCycle( Chip8 * chip8 ) {
         case RET:
           /* Return from function call */
           chip8->pc = chip8->stack[chip8->sp];
-          chip8->sp--;
+          if( chip8->sp ) {
+            chip8->sp--;
+          }
           chip8->pc += PC_INCR;
           break;
       }
@@ -294,8 +296,8 @@ void emulateCycle( Chip8 * chip8 ) {
         switch( chip8->opcode & 0xF0FF ) {
 
           case LDDT:
-            /* TODO */
             /* Set Vx to the value of the delay timer */
+            chip8->V[(chip8->opcode & 0x0F00) >> BYTE ];
             chip8->pc += PC_INCR;
             break;
 
@@ -306,11 +308,13 @@ void emulateCycle( Chip8 * chip8 ) {
 
           case LDSDT:
             /* TODO */
+            chip8->delayTimer = chip8->V[(chip8->opcode & 0x0F00) >> BYTE ];
             chip8->pc += PC_INCR;
             break;
 
           case LDST:
             /* TODO */
+            chip8->soundTimer = chip8->V[(chip8->opcode & 0x0F00) >> BYTE ];
             chip8->pc += PC_INCR;
             break;
 
