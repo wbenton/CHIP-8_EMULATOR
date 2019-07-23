@@ -102,8 +102,8 @@ typedef struct chip8Cpu
   unsigned short stack[STACK_SIZE];     /* Stack to hold return addresses */
   unsigned short sp;                    /* Stack Pointer (16-bit) */
   unsigned short opcode;                /* Machine code instruction */
-  unsigned short delayTimer;            /* 60hz delay timer */
-  unsigned short soundTimer;            /* 60hz sound timer */
+  unsigned char  delayTimer;            /* 60hz delay timer */
+  unsigned char  soundTimer;            /* 60hz sound timer */
   unsigned char  memory[MEM_SIZE];      /* Memory map */
   unsigned char  key[NUM_OF_KEYS];      /* Holds key state */
   unsigned char  drawToScreenFlag;      /* Check if screen should be drawn */

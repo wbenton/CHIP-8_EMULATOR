@@ -38,9 +38,11 @@ void emulateCycle( Chip8 * chip8 ) {
           if( chip8->sp ) {
             chip8->sp--;
           }
+          fprintf( stderr, "RETURNING" );
           chip8->pc += PC_INCR;
           break;
       }
+      break;
 
     case JP:
       /* Jump to instruction */
@@ -49,9 +51,7 @@ void emulateCycle( Chip8 * chip8 ) {
 
     case CALL:
       /* Call subroutine */
-      if( chip8->stack[chip8->sp] ) {
-        chip8->sp++;
-      }
+      chip8->sp++;
       chip8->stack[chip8->sp] = chip8->pc;
       chip8->pc = chip8->opcode & 0x0FFF;
       break;
@@ -246,8 +246,8 @@ void emulateCycle( Chip8 * chip8 ) {
         {
         unsigned short x_row  = chip8->V[(chip8->opcode & 0x0F00) >> BYTE];
         unsigned short y_row  = chip8->V[(chip8->opcode & 0x00F0) >> NIBBLE];
-        unsigned short height = chip8->opcode & 0x00F;
-        unsigned short pixel;
+        unsigned short height = chip8->opcode & 0x000F;
+        unsigned short pixel = 0;
 
         /* Taken from multigesture.net */
         chip8->V[0xF] = 0;
@@ -297,11 +297,19 @@ void emulateCycle( Chip8 * chip8 ) {
 
           case LDDT:
             /* Set Vx to the value of the delay timer */
-            chip8->V[(chip8->opcode & 0x0F00) >> BYTE ];
+            chip8->V[(chip8->opcode & 0x0F00) >> BYTE ]  = chip8->delayTimer;
             chip8->pc += PC_INCR;
             break;
 
           case LDKP:
+            {
+              SDL_Event *event = 0;
+              SDL_WaitEvent( event );
+              while( !(event->key.type) ) {
+               SDL_WaitEvent( event ); 
+              }
+              fprintf( stderr, "PRESSED SOMETHING\n" );
+            }
             /* TODO */
             chip8->pc += PC_INCR;
             break;
@@ -325,10 +333,13 @@ void emulateCycle( Chip8 * chip8 ) {
             break;
 
           case LDF:
+            /* TODO */
+            /* Fix this implementation */
             {
-            unsigned short sprite = chip8->opcode & 0x0F00;
-
-            chip8->I = chip8->memory[sprite * 5];
+            unsigned char spriteNum = chip8->V[(chip8->opcode & 0x0F00) >> BYTE];
+            fprintf( stderr, "Sprite Num: %d\n", spriteNum );
+            chip8->I = 0x50 + (spriteNum * 5);
+            fprintf( stderr, "Sprite Idx: %x\n", chip8->I );
             chip8->pc += PC_INCR;
             }
             break;
@@ -364,7 +375,7 @@ void emulateCycle( Chip8 * chip8 ) {
             unsigned char regNum = (chip8->opcode & 0x0F00) >> BYTE;
 
             /* Load registers from values in memory */
-            for( int reg = 0; reg <= regNum; ++reg ) {
+            for( int reg = 0; reg <= regNum; reg++ ) {
               chip8->V[reg] = chip8->memory[chip8->I + reg];
             }
             chip8->pc += PC_INCR;

@@ -1,3 +1,6 @@
+make :
+	make clean
+	make new
 new :
 	gcc -g -c *.c
 	gcc -lSDL2 *.o

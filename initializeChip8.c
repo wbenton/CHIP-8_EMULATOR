@@ -30,12 +30,17 @@ void initializeChip8( Chip8 * chip8 ) {
   chip8->pc = PC_START_VALUE;
 
   /* Load fontset into memory */
-  for( int i = 0; i < FONT_SET_NUM; ++i ) {
-    chip8->memory[i] = chip8_fontset[i];
+  /* Changed where the font set is saved to memeory */
+  unsigned char fontIter = 0;
+  for( int i = START_FONT_SET; i < END_FONT_SET; ++i ) {
+    chip8->memory[i] = chip8_fontset[fontIter];
+    fontIter++;
   }
 
+  SDL_Init( SDL_INIT_VIDEO );
+
   /* Create window to that will display the screen */
-  chip8->window    = SDL_CreateWindow("Chip8 Emulator", SDL_WINDOWPOS_UNDEFINED, 
+  chip8->window    = SDL_CreateWindow("Chip8 Emulator", SDL_WINDOWPOS_UNDEFINED,
     SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 
   /* Create the renderer which will allow for gpu accelerated graphics */
